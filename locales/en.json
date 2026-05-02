@@ -7,24 +7,76 @@
   },
   "steps": [
     {
-      "id": 0, "title": "Mars Global Architecture", "text": "Welcome. Use the keyboard arrows to navigate through the 100% Azure-centric architecture.",
+      "id": 0, "title": "Mars Petcare Global Architecture", "text": "Welcome. This is the end-to-end view of our 100% Azure-centric architecture, designed for global scalability and data integrity.",
       "x": 0, "y": 0, "scale": 1.0
     },
     {
-      "id": 1, "title": "1. Frontend & Security Layer", "text": "Node.js app on Azure Static Web Apps. Protected by WAF, Rate Limiting, and CORS. Dynamic multi-brand via URL.",
-      "x": 300, "y": 150, "scale": 2.5
+      "id": 1, "title": "Flow Types (Sync / Async)", "text": "We classify interactions into synchronous (for immediate web user experience) and asynchronous (for heavy lifting and B2B integration).",
+      "x": 511, "y": -185, "scale": 5.0
     },
     {
-      "id": 2, "title": "2. Master Data Management (MDM)", "text": "Azure Functions query CosmosDB. If user exists, pet array is updated; if not, a Global ID is created.",
-      "x": -50, "y": 100, "scale": 2.5
+      "id": 2, "title": "Web Application (Frontend Layer)", "text": "Built in Node.js and hosted on Azure Static Web Apps. It serves as the global multi-brand entry point.",
+      "x": 517, "y": 34, "scale": 5.0
     },
     {
-      "id": 3, "title": "3. Orchestration & Decoupling", "text": "Clean data flows to Azure Service Bus. This guarantees 0% data loss if Salesforce experiences downtime.",
-      "x": -250, "y": 50, "scale": 2.2
+      "id": 3, "title": "Dynamic Forms", "text": "Forms and styles change dynamically based on the URL and language, driven by a master JSON to easily onboard new brands.",
+      "x": 512, "y": -38, "scale": 5.0
     },
     {
-      "id": 4, "title": "4. Integration Loop-back", "text": "Sender Function asynchronously injects data into Salesforce, receives Contact ID, and updates CosmosDB.",
-      "x": -450, "y": 0, "scale": 2.5
+      "id": 4, "title": "Performance and Security", "text": "We secure data entry with Azure CDN, Web Application Firewall (WAF), and API Gateway, ensuring low latency and attack mitigation.",
+      "x": 421, "y": 15, "scale": 3.6
+    },
+    {
+      "id": 5, "title": "Identity Validation", "text": "We implement reCAPTCHA and IP Rate Limiting to ensure only legitimate records enter our data ecosystem.",
+      "x": 311, "y": 10, "scale": 5.0
+    },
+    {
+      "id": 6, "title": "Data Management (MDM Engine)", "text": "Azure Functions query Cosmos DB to check if the user already exists, determining if it's a new creation or a pet portfolio update.",
+      "x": 257, "y": -5, "scale": 5.0
+    },
+    {
+      "id": 7, "title": "Azure Service Bus (Ingestion)", "text": "The first decoupling point. We queue the validated record here to guarantee zero data loss if downstream systems fail.",
+      "x": 168, "y": -2, "scale": 5.0
+    },
+    {
+      "id": 8, "title": "Worker 1 (Sales Cloud Sync)", "text": "This worker reads the main queue and is solely responsible for communicating with Salesforce via REST API for Contact management.",
+      "x": 76, "y": -5, "scale": 5.0
+    },
+    {
+      "id": 9, "title": "Salesforce Sales Cloud", "text": "A POST or PATCH operation is executed. If it's a new user, Sales Cloud generates and synchronously returns the native Salesforce ID to the worker.",
+      "x": -39, "y": -8, "scale": 5.0
+    },
+    {
+      "id": 10, "title": "Azure Service Bus (Loop-back)", "text": "We fire an event to a second queue with the new Salesforce ID. This keeps the process asynchronous and highly fault-tolerant.",
+      "x": -38, "y": -97, "scale": 5.0
+    },
+    {
+      "id": 11, "title": "Worker 2 (Loop-back Handler)", "text": "The second worker picks up the message containing the Salesforce ID and prepares to save it to our master database.",
+      "x": 178, "y": -97, "scale": 5.0
+    },
+    {
+      "id": 12, "title": "Cosmos DB (Golden Record)", "text": "The Cosmos DB record is updated with the Salesforce ID. Cosmos DB acts as the single source of truth with a flexible schema (JSON) for pets.",
+      "x": 235, "y": -66, "scale": 5.0
+    },
+    {
+      "id": 13, "title": "Identity Consolidation", "text": "With the ID saved in Cosmos DB, referential integrity is guaranteed. The system now knows exactly who the user is across both clouds.",
+      "x": -39, "y": -8, "scale": 5.0
+    },
+    {
+      "id": 14, "title": "Azure Service Bus (Activation)", "text": "A third queue comes into play, this time dedicated exclusively to orchestrating the dispatch of the consolidated record to the Marketing engine.",
+      "x": -163, "y": -1, "scale": 5.0
+    },
+    {
+      "id": 15, "title": "Worker 3 (SFMC Injection)", "text": "The third worker securely injects the data into Marketing Cloud using the API Event, triggering the customer journey.",
+      "x": -260, "y": -7, "scale": 5.0
+    },
+    {
+      "id": 16, "title": "Marketing Cloud (Journey Builder)", "text": "The user enters a shared Data Extension. A Decision Split evaluates if the profile is new or updated to send the appropriate email.",
+      "x": -471, "y": 8, "scale": 3.4
+    },
+    {
+      "id": 17, "title": "Monitoring & Continuous Development", "text": "End-to-end observability. We use Azure Monitor and Application Insights alongside Salesforce metrics to track the health of the entire data pipeline.",
+      "x": -58, "y": 233, "scale": 2.9
     }
   ]
 }
