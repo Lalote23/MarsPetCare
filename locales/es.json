@@ -78,5 +78,11 @@
       "id": 17, "title": "Monitoreo y Desarrollo Continuo", "text": "Observabilidad end-to-end. Utilizamos Azure Monitor y Application Insights junto con las métricas de Salesforce para rastrear la salud de todo el pipeline de datos.",
       "x": -58, "y": 233, "scale": 2.9
     }
+    {
+      "id": 18, 
+      "title": "Entornos (Environments & CI/CD)", 
+      "text": "Se tienen definidos entornos aislados (DEV, STAGING, PROD) para validar el código y probar el flujo end-to-end simulando la carga de producción antes de impactar al usuario final.",
+      "x": -6, "y": -296, "scale": 2.9
+    }
   ]
 }
