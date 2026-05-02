@@ -91,7 +91,7 @@ window.onload = () => {
     setTimeout(() => goToStep(0), 300);
 };
 
-img[src*="mars-company-sign-logo"] {
+#diagram-img {
     position: fixed;
     top: 20px;
     left: 30px; /* Si lo tenías del lado derecho, cambia 'left' por 'right' */
