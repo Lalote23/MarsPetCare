@@ -1,102 +1,82 @@
-let currentStep = 0;
-let stepsData = [];
-let panzoomInstance;
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+body { background-color: #0f111a; color: #ffffff; overflow: hidden; }
 
-const diagramImg = document.getElementById('diagram-img');
-const popup = document.getElementById('info-popup');
-const progressBar = document.getElementById('progress-bar');
-const minimapViewbox = document.getElementById('minimap-viewbox');
-
-// Iniciar Panzoom
-panzoomInstance = Panzoom(diagramImg, { maxScale: 5, minScale: 0.1, step: 0.2 });
-diagramImg.parentElement.addEventListener('wheel', panzoomInstance.zoomWithWheel);
-
-async function loadLanguage(lang) {
-    try {
-        const response = await fetch(`locales/${lang}.json`);
-        const data = await response.json();
-        stepsData = data.steps;
-
-        document.getElementById('btn-next').innerText = data.general.next;
-        document.getElementById('btn-prev').innerText = data.general.prev;
-        document.getElementById('btn-overview').innerText = data.general.overview;
-        document.getElementById('btn-info').innerText = data.general.info;
-
-        goToStep(currentStep); // Refrescar vista actual
-    } catch (e) { console.error("Error cargando JSON", e); }
+/* Puntero Láser (Opcional) */
+.laser-pointer {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="5" fill="red" opacity="0.7"/><circle cx="10" cy="10" r="2" fill="white"/></svg>') 10 10, crosshair !important;
 }
 
-function goToStep(index) {
-    if (index < 0 || index >= stepsData.length) return;
-    currentStep = index;
-    const step = stepsData[currentStep];
+#canvas-container { width: 100vw; height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; }
 
-    // Mover y Zoom
-    panzoomInstance.pan(step.x, step.y, { animate: true, duration: 800 });
-    setTimeout(() => panzoomInstance.zoom(step.scale, { animate: true, duration: 800 }), 50);
-
-    // Actualizar UI
-    document.getElementById('popup-title').innerText = step.title;
-    document.getElementById('popup-text').innerText = step.text;
-    
-    if (currentStep === 0) popup.classList.add('hidden');
-    else popup.classList.remove('hidden');
-
-    // Progreso
-    progressBar.style.width = `${(currentStep / (stepsData.length - 1)) * 100}%`;
-
-    // 🎯 Lógica del Minimapa Corregida (Movimiento + Escala)
-    const viewboxScale = 1 / step.scale;
-    const minimapX = -(step.x * 0.05 * viewboxScale); 
-    const minimapY = -(step.y * 0.05 * viewboxScale); 
-    
-    minimapViewbox.style.transform = `translate(${minimapX}px, ${minimapY}px) scale(${viewboxScale})`;
+/* 🔵 REGLA CRÍTICA: Mantiene la arquitectura en su tamaño correcto */
+#diagram-img { 
+    width: 100%; 
+    height: 100%; 
+    max-width: 90vw; 
+    max-height: 80vh; 
+    object-fit: contain; 
+    transform-origin: center center; 
 }
 
-// Botones
-document.getElementById('btn-next').addEventListener('click', () => {
-    if (currentStep >= stepsData.length - 1) goToStep(0);
-    else goToStep(currentStep + 1);
-});
-document.getElementById('btn-prev').addEventListener('click', () => goToStep(currentStep - 1));
-document.getElementById('btn-overview').addEventListener('click', () => goToStep(0));
-document.getElementById('btn-info').addEventListener('click', () => popup.classList.toggle('hidden'));
-
-function changeLanguage(lang) {
-    window.history.pushState({}, '', `?lang=${lang}`);
-    loadLanguage(lang);
-}
-
-// Teclado
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') {
-        if (currentStep >= stepsData.length - 1) goToStep(0);
-        else goToStep(currentStep + 1);
-    }
-    if (e.key === 'ArrowLeft') goToStep(currentStep - 1);
-    if (e.key === ' ') { e.preventDefault(); popup.classList.toggle('hidden'); }
-});
-
-// Capturar coordenadas (doble click)
-diagramImg.addEventListener('dblclick', () => {
-    const pan = panzoomInstance.getPan();
-    const scale = panzoomInstance.getScale();
-    console.log(`"x": ${pan.x.toFixed(0)}, "y": ${pan.y.toFixed(0)}, "scale": ${scale.toFixed(1)}`);
-    alert(`Coordenadas en consola: x:${pan.x.toFixed(0)}, y:${pan.y.toFixed(0)}, scale:${scale.toFixed(1)}`);
-});
-
-window.onload = () => {
-    const lang = new URLSearchParams(window.location.search).get('lang') || 'es';
-    loadLanguage(lang);
-    setTimeout(() => goToStep(0), 300);
-};
-
-#diagram-img {
+/* 🔵 LOGO DE MARS: Lo hace pequeño y lo pone en la esquina */
+#mars-logo {
     position: fixed;
     top: 20px;
-    left: 30px; /* Si lo tenías del lado derecho, cambia 'left' por 'right' */
-    width: 150px; /* Puedes hacer este número más grande o pequeño según gustes */
+    left: 30px; 
+    width: 150px; 
     height: auto;
-    z-index: 1001; /* Asegura que flote por encima del diagrama y los botones */
-    pointer-events: none; /* Evita que el logo bloquee el mouse si intentas hacer zoom ahí */
+    z-index: 1001; 
+    pointer-events: none; 
+}
+
+#progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: #222; z-index: 1000; }
+#progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #0078D4, #00C4FF); transition: width 0.4s ease; }
+
+#controls-bar {
+    position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 15px; align-items: center;
+    background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(10px);
+    padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+button {
+    background: #2a2a2a; color: white; border: 1px solid #444; padding: 8px 16px; 
+    border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.2s; outline: none;
+}
+button:hover { background: #0078D4; border-color: #0078D4; transform: scale(1.05); }
+
+/* 🟡 Pop-up de Explicación (Estilo Libreta/Nota) */
+#info-popup {
+    position: fixed; top: 60px; left: 40px; width: 320px;
+    background: #fdfae3; border: 1px solid #e0dcae;
+    border-radius: 2px 15px 15px 2px;
+    box-shadow: 5px 15px 25px rgba(0,0,0,0.4), inset 5px 0 0 rgba(200, 50, 50, 0.6);
+    padding: 20px 20px 20px 30px; z-index: 999; 
+    transition: opacity 0.3s, transform 0.3s; 
+    background-image: repeating-linear-gradient(transparent, transparent 27px, #a6d8f2 28px);
+    background-position: 0 40px;
+}
+#info-popup.hidden { opacity: 0; pointer-events: none; transform: translateX(-20px) rotate(-3deg); }
+#info-popup h2 { 
+    color: #333; font-size: 1.2rem; margin-bottom: 15px; padding-bottom: 5px; 
+    font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; position: relative; display: inline-block;
+}
+#info-popup h2::after {
+    content: ''; position: absolute; bottom: 0; left: -5%; width: 110%; height: 8px;
+    background-color: rgba(255, 235, 59, 0.7); z-index: -1; border-radius: 4px; transform: rotate(-1deg);
+}
+#info-popup p { font-size: 0.95rem; line-height: 28px; color: #444; font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; }
+
+/* 🟣 Minimapa */
+#minimap {
+    position: fixed; bottom: 90px; right: 25px; width: 180px;
+    background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; overflow: hidden; z-index: 998;
+}
+#minimap img { width: 100%; display: block; opacity: 0.5; }
+#minimap-viewbox {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    border: 2px solid #00C4FF; background: rgba(0, 196, 255, 0.15);
+    transform-origin: top left; transition: all 0.5s ease;
 }
