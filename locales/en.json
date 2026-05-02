@@ -7,19 +7,19 @@
   },
   "steps": [
     {
-      "id": 0, "title": "Mars Petcare Global Architecture", "text": "Welcome. This is the end-to-end view of our 100% Azure-centric architecture, designed for global scalability and data integrity.",
+      "id": 0, "title": "Mars Petcare App Architecture", "text": "Welcome. This is the flow view of Azure - Salesforce centric architecture, designed for global scalability and data integrity.",
       "x": 0, "y": 0, "scale": 1.0
     },
     {
-      "id": 1, "title": "Flow Types (Sync / Async)", "text": "We classify interactions into synchronous (for immediate web user experience) and asynchronous (for heavy lifting and B2B integration).",
+      "id": 1, "title": "Flow Types (Sync / Async)", "text": "We classify interactions into synchronous (for immediate web user experience) and asynchronous (for heavy lifting and Azure - Salesforce integration).",
       "x": 511, "y": -185, "scale": 5.0
     },
     {
-      "id": 2, "title": "Web Application (Frontend Layer)", "text": "Built in Node.js and hosted on Azure Static Web Apps. It serves as the global multi-brand entry point.",
+      "id": 2, "title": "Web Application (Form)", "text": "Built in Node.js and hosted on Azure Static Web. It serves as the global multibrand entry point.",
       "x": 517, "y": 34, "scale": 5.0
     },
     {
-      "id": 3, "title": "Dynamic Forms", "text": "Forms and styles change dynamically based on the URL and language, driven by a master JSON to easily onboard new brands.",
+      "id": 3, "title": "Dynamic Forms", "text": "Forms and styles change dynamically based on the URL, defined by the language and the brand, driven by a master JSON to easily onboard new brands.",
       "x": 512, "y": -38, "scale": 5.0
     },
     {
@@ -31,39 +31,39 @@
       "x": 311, "y": 10, "scale": 5.0
     },
     {
-      "id": 6, "title": "Data Management (MDM Engine)", "text": "Azure Functions query Cosmos DB to check if the user already exists, determining if it's a new creation or a pet portfolio update.",
+      "id": 6, "title": "Data Management (MDM Engine)", "text": "Azure Functions query CosmosDB to check if the user already exists, determining if it's a new creation or a pet list update.",
       "x": 257, "y": -5, "scale": 5.0
     },
     {
-      "id": 7, "title": "Azure Service Bus (Ingestion)", "text": "The first decoupling point. We queue the validated record here to guarantee zero data loss if downstream systems fail.",
+      "id": 7, "title": "Azure Service Bus (Ingestion)", "text": "The first decoupling point. We queue the validated record here to guarantee zero data loss if Salesforce fails.",
       "x": 168, "y": -2, "scale": 5.0
     },
     {
-      "id": 8, "title": "Worker 1 (Sales Cloud Sync)", "text": "This worker reads the main queue and is solely responsible for communicating with Salesforce via REST API for Contact management.",
+      "id": 8, "title": "Worker 1 (Sales Cloud Sync)", "text": "This worker reads the main queue and is the responsable for communicating with Salesforce via REST API for Contact management.",
       "x": 76, "y": -5, "scale": 5.0
     },
     {
-      "id": 9, "title": "Salesforce Sales Cloud", "text": "A POST or PATCH operation is executed. If it's a new user, Sales Cloud generates and synchronously returns the native Salesforce ID to the worker.",
+      "id": 9, "title": "Salesforce Sales Cloud", "text": "A POST (if it's a new user) or PATCH (if it's an existing user) operation is executed. Sales Cloud generates and synchronously returns the native Salesforce ID to the worker.",
       "x": -39, "y": -8, "scale": 5.0
     },
     {
-      "id": 10, "title": "Azure Service Bus (Loop-back)", "text": "We fire an event to a second queue with the new Salesforce ID. This keeps the process asynchronous and highly fault-tolerant.",
+      "id": 10, "title": "Azure Service Bus (Loopback)", "text": "It fires an event to a second queue with the new Salesforce ID. This keeps the process asynchronous and highly fault tolerant.",
       "x": -38, "y": -97, "scale": 5.0
     },
     {
-      "id": 11, "title": "Worker 2 (Loop-back Handler)", "text": "The second worker picks up the message containing the Salesforce ID and prepares to save it to our master database.",
+      "id": 11, "title": "Worker 2 (Loopback Handler)", "text": "The second worker picks up the message containing the Salesforce ID and prepares to save it to the master database.",
       "x": 178, "y": -97, "scale": 5.0
     },
     {
-      "id": 12, "title": "Cosmos DB (Golden Record)", "text": "The Cosmos DB record is updated with the Salesforce ID. Cosmos DB acts as the single source of truth with a flexible schema (JSON) for pets.",
+      "id": 12, "title": "CosmosDB", "text": "The CosmosDB record is updated with the Salesforce ID. CosmosDB acts as the single source of truth with a flexible schema (JSON) for pets.",
       "x": 235, "y": -66, "scale": 5.0
     },
     {
-      "id": 13, "title": "Identity Consolidation", "text": "With the ID saved in Cosmos DB, referential integrity is guaranteed. The system now knows exactly who the user is across both clouds.",
+      "id": 13, "title": "Identity Consolidation", "text": "With the ID saved in CosmosDB, referential integrity is guaranteed. The system now knows exactly who the user is across both clouds.",
       "x": -39, "y": -8, "scale": 5.0
     },
     {
-      "id": 14, "title": "Azure Service Bus (Activation)", "text": "A third queue comes into play, this time dedicated exclusively to orchestrating the dispatch of the consolidated record to the Marketing engine.",
+      "id": 14, "title": "Azure Service Bus (Activation)", "text": "A third queue comes into play, this time dedicated exclusively to orchestrating the dispatch of the consolidated record to Salesforce Marketing Cloud.",
       "x": -163, "y": -1, "scale": 5.0
     },
     {
@@ -75,11 +75,11 @@
       "x": -471, "y": 8, "scale": 3.4
     },
     {
-      "id": 17, "title": "Monitoring & Continuous Development", "text": "End-to-end observability. We use Azure Monitor and Application Insights alongside Salesforce metrics to track the health of the entire data pipeline.",
+      "id": 17, "title": "Monitoring & Continuous Development", "text": "End to end observability. Azure Monitor and Application Insights alongside Salesforce metrics track the health of the entire data flow.",
       "x": -58, "y": 233, "scale": 2.9
     },
     {
-      "id": 18, "title": "Environments & CI/CD", "text": "Isolated environments (DEV, STAGING, PROD) are defined to validate code and test the end-to-end flow simulating production load before impacting the end user.",
+      "id": 18, "title": "Environments & CI/CD", "text": "Isolated environments (DEV, STAGING, PROD) are defined to validate code and test the end to end flow simulating production load before impacting the end user.",
       "x": -6, "y": -296, "scale": 2.9
     }
   ]
