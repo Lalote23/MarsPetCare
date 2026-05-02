@@ -84,23 +84,3 @@
     }
   ]
 }
-      "x": -163, "y": -1, "scale": 5.0
-    },
-    {
-      "id": 15, "title": "Worker 3 (SFMC Injection)", "text": "The third worker securely injects the data into Marketing Cloud using the API Event, triggering the customer journey.",
-      "x": -260, "y": -7, "scale": 5.0
-    },
-    {
-      "id": 16, "title": "Marketing Cloud (Journey Builder)", "text": "The user enters a shared Data Extension. A Decision Split evaluates if the profile is new or updated to send the appropriate email.",
-      "x": -471, "y": 8, "scale": 3.4
-    },
-    {
-      "id": 17, "title": "Monitoring & Continuous Development", "text": "End-to-end observability. We use Azure Monitor and Application Insights alongside Salesforce metrics to track the health of the entire data pipeline.",
-      "x": -58, "y": 233, "scale": 2.9
-    },
-    {
-      "id": 18, "title": "Environments & CI/CD", "text": "Isolated environments (DEV, STAGING, PROD) are defined to validate code and test the end-to-end flow simulating production load before impacting the end user.",
-      "x": -6, "y": -296, "scale": 2.9
-    },
-  ]
-}
