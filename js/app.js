@@ -8,7 +8,12 @@ const progressBar = document.getElementById('progress-bar');
 const minimapViewbox = document.getElementById('minimap-viewbox');
 
 // Iniciar Panzoom
-panzoomInstance = Panzoom(diagramImg, { maxScale: 5, minScale: 0.5, contain: 'outside', step: 0.2 });
+// Iniciar Panzoom (Quitamos el 'contain' y bajamos el minScale)
+panzoomInstance = Panzoom(diagramImg, { 
+    maxScale: 5, 
+    minScale: 0.1, 
+    step: 0.2 
+});
 diagramImg.parentElement.addEventListener('wheel', panzoomInstance.zoomWithWheel);
 
 async function loadLanguage(lang) {
