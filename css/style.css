@@ -90,3 +90,13 @@ window.onload = () => {
     loadLanguage(lang);
     setTimeout(() => goToStep(0), 300);
 };
+
+img[src*="mars-company-sign-logo"] {
+    position: fixed;
+    top: 20px;
+    left: 30px; /* Si lo tenías del lado derecho, cambia 'left' por 'right' */
+    width: 150px; /* Puedes hacer este número más grande o pequeño según gustes */
+    height: auto;
+    z-index: 1001; /* Asegura que flote por encima del diagrama y los botones */
+    pointer-events: none; /* Evita que el logo bloquee el mouse si intentas hacer zoom ahí */
+}
