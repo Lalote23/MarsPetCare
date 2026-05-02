@@ -75,7 +75,7 @@
       "x": -471, "y": 8, "scale": 3.4
     },
     {
-      "id": 17, "title": "Monitoreo y Desarrollo Continuo", "text": "Observabilidad end to end. Utilizamos Azure Monitor y Application Insights junto con las métricas de Salesforce para rastrear la salud de todo el flujo de datos.",
+      "id": 17, "title": "Monitoreo y Desarrollo Continuo", "text": "Monitoreo end to end. Utilizamos Azure Monitor y Application Insights junto con las métricas de Salesforce para rastrear la salud de todo el flujo de datos.",
       "x": -58, "y": 233, "scale": 2.9
     },
     {
