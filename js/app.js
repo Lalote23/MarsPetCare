@@ -55,10 +55,25 @@ function goToStep(index) {
 }
 
 // Botones
-document.getElementById('btn-next').addEventListener('click', () => goToStep(currentStep + 1));
+// Botones
+document.getElementById('btn-next').addEventListener('click', () => {
+    // Si es el último paso, regresa al inicio (0). Si no, avanza al siguiente.
+    if (currentStep >= stepsData.length - 1) goToStep(0);
+    else goToStep(currentStep + 1);
+});
 document.getElementById('btn-prev').addEventListener('click', () => goToStep(currentStep - 1));
 document.getElementById('btn-overview').addEventListener('click', () => goToStep(0));
 document.getElementById('btn-info').addEventListener('click', () => popup.classList.toggle('hidden'));
+
+// Teclado
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+        if (currentStep >= stepsData.length - 1) goToStep(0);
+        else goToStep(currentStep + 1);
+    }
+    if (e.key === 'ArrowLeft') goToStep(currentStep - 1);
+    if (e.key === ' ') { e.preventDefault(); popup.classList.toggle('hidden'); }
+});
 
 function changeLanguage(lang) {
     window.history.pushState({}, '', `?lang=${lang}`);
