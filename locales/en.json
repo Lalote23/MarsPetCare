@@ -77,12 +77,10 @@
     {
       "id": 17, "title": "Monitoring & Continuous Development", "text": "End-to-end observability. We use Azure Monitor and Application Insights alongside Salesforce metrics to track the health of the entire data pipeline.",
       "x": -58, "y": 233, "scale": 2.9
-    }
+    },
     {
-      "id": 18, 
-      "title": "Environments & CI/CD", 
-      "text": "Isolated environments (DEV, STAGING, PROD) are defined to validate code and test the end-to-end flow simulating production load before impacting the end user.",
+      "id": 18, "title": "Environments & CI/CD", "text": "Isolated environments (DEV, STAGING, PROD) are defined to validate code and test the end-to-end flow simulating production load before impacting the end user.",
       "x": -6, "y": -296, "scale": 2.9
-    }
+    },
   ]
 }
