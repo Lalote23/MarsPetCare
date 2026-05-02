@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Petcare - Global Architecture</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+
+    <div id="canvas-container" class="laser-pointer">
+        <img src="img/diagrama.png" id="diagram-img" alt="Mars Architecture">
+    </div>
+
+    <div id="minimap">
+        <img src="img/diagrama.png" alt="Minimap">
+        <div id="minimap-viewbox"></div>
+    </div>
+
+    <div id="info-popup" class="hidden">
+        <div class="popup-content">
+            <h2 id="popup-title">Cargando...</h2>
+            <p id="popup-text">Por favor espera...</p>
+        </div>
+    </div>
+
+    <div id="controls-bar">
+        <div class="lang-toggles">
+            <button onclick="changeLanguage('es')">ES</button>
+            <button onclick="changeLanguage('en')">EN</button>
+        </div>
+        <div class="nav-controls">
+            <button id="btn-prev">⬅ Atrás</button>
+            <button id="btn-info">Info</button>
+            <button id="btn-next">Siguiente ➡</button>
+        </div>
+        <div class="zoom-controls">
+            <button id="btn-overview">🌐 Overview</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
