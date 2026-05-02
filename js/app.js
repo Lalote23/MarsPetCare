@@ -7,12 +7,8 @@ const popup = document.getElementById('info-popup');
 const progressBar = document.getElementById('progress-bar');
 const minimapViewbox = document.getElementById('minimap-viewbox');
 
-// Iniciar Panzoom (Quitamos el 'contain' y bajamos el minScale)
-panzoomInstance = Panzoom(diagramImg, { 
-    maxScale: 5, 
-    minScale: 0.1, 
-    step: 0.2 
-});
+// Iniciar Panzoom
+panzoomInstance = Panzoom(diagramImg, { maxScale: 5, minScale: 0.1, step: 0.2 });
 diagramImg.parentElement.addEventListener('wheel', panzoomInstance.zoomWithWheel);
 
 async function loadLanguage(lang) {
@@ -35,11 +31,11 @@ function goToStep(index) {
     currentStep = index;
     const step = stepsData[currentStep];
 
-    // Mover y Zoom principal
+    // Mover y Zoom
     panzoomInstance.pan(step.x, step.y, { animate: true, duration: 800 });
     setTimeout(() => panzoomInstance.zoom(step.scale, { animate: true, duration: 800 }), 50);
 
-    // Actualizar UI (Textos y visibilidad)
+    // Actualizar UI
     document.getElementById('popup-title').innerText = step.title;
     document.getElementById('popup-text').innerText = step.text;
     
@@ -49,22 +45,16 @@ function goToStep(index) {
     // Progreso
     progressBar.style.width = `${(currentStep / (stepsData.length - 1)) * 100}%`;
 
-    // --- Lógica Corregida del Minimapa ---
-    // 1. Calculamos el tamaño de la caja (inverso al zoom)
+    // 🎯 Lógica del Minimapa Corregida (Movimiento + Escala)
     const viewboxScale = 1 / step.scale;
-    
-    // 2. Calculamos el movimiento (inverso y escalado)
-    // Usamos factores para ajustar el movimiento del minimapa en relación al canvas original.
-    // Estos valores (0.1 y 0.05) pueden requerir un pequeño ajuste dependiendo de la resolución de tu imagen.
-    const minimapX = -(step.x * 0.1 * viewboxScale); 
+    const minimapX = -(step.x * 0.05 * viewboxScale); 
     const minimapY = -(step.y * 0.05 * viewboxScale); 
-
+    
     minimapViewbox.style.transform = `translate(${minimapX}px, ${minimapY}px) scale(${viewboxScale})`;
 }
 
 // Botones
 document.getElementById('btn-next').addEventListener('click', () => {
-    // Si es el último paso, regresa al inicio (0). Si no, avanza al siguiente.
     if (currentStep >= stepsData.length - 1) goToStep(0);
     else goToStep(currentStep + 1);
 });
