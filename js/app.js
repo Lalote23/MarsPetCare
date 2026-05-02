@@ -45,10 +45,15 @@ function goToStep(index) {
     // Progreso
     progressBar.style.width = `${(currentStep / (stepsData.length - 1)) * 100}%`;
 
-    // 🎯 Lógica del Minimapa Corregida (Movimiento + Escala)
+    // 🎯 Lógica del Minimapa (CALIBRADA Y CENTRADA)
     const viewboxScale = 1 / step.scale;
-    const minimapX = -(step.x * 0.05 * viewboxScale); 
-    const minimapY = -(step.y * 0.05 * viewboxScale); 
+    
+    // Calculamos la proporción exacta entre el ancho del minimapa y tu pantalla
+    const screenRatio = 180 / window.innerWidth; 
+    
+    // Invertimos el movimiento y lo ajustamos a la proporción
+    const minimapX = -step.x * screenRatio; 
+    const minimapY = -step.y * screenRatio; 
     
     minimapViewbox.style.transform = `translate(${minimapX}px, ${minimapY}px) scale(${viewboxScale})`;
 }
