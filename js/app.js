@@ -35,11 +35,11 @@ function goToStep(index) {
     currentStep = index;
     const step = stepsData[currentStep];
 
-    // Mover y Zoom
+    // Mover y Zoom principal
     panzoomInstance.pan(step.x, step.y, { animate: true, duration: 800 });
     setTimeout(() => panzoomInstance.zoom(step.scale, { animate: true, duration: 800 }), 50);
 
-    // Actualizar UI
+    // Actualizar UI (Textos y visibilidad)
     document.getElementById('popup-title').innerText = step.title;
     document.getElementById('popup-text').innerText = step.text;
     
@@ -49,8 +49,17 @@ function goToStep(index) {
     // Progreso
     progressBar.style.width = `${(currentStep / (stepsData.length - 1)) * 100}%`;
 
-    // Minimapa
-    minimapViewbox.style.transform = `scale(${1 / step.scale})`;
+    // --- Lógica Corregida del Minimapa ---
+    // 1. Calculamos el tamaño de la caja (inverso al zoom)
+    const viewboxScale = 1 / step.scale;
+    
+    // 2. Calculamos el movimiento (inverso y escalado)
+    // Usamos factores para ajustar el movimiento del minimapa en relación al canvas original.
+    // Estos valores (0.1 y 0.05) pueden requerir un pequeño ajuste dependiendo de la resolución de tu imagen.
+    const minimapX = -(step.x * 0.1 * viewboxScale); 
+    const minimapY = -(step.y * 0.05 * viewboxScale); 
+
+    minimapViewbox.style.transform = `translate(${minimapX}px, ${minimapY}px) scale(${viewboxScale})`;
 }
 
 // Botones
