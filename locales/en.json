@@ -1,0 +1,30 @@
+{
+  "general": {
+    "next": "Next ➡",
+    "prev": "⬅ Back",
+    "overview": "🌐 Global View",
+    "info": "💡 Toggle Info"
+  },
+  "steps": [
+    {
+      "id": 0, "title": "Mars Global Architecture", "text": "Welcome. Use the keyboard arrows to navigate through the 100% Azure-centric architecture.",
+      "x": 0, "y": 0, "scale": 1.0
+    },
+    {
+      "id": 1, "title": "1. Frontend & Security Layer", "text": "Node.js app on Azure Static Web Apps. Protected by WAF, Rate Limiting, and CORS. Dynamic multi-brand via URL.",
+      "x": 300, "y": 150, "scale": 2.5
+    },
+    {
+      "id": 2, "title": "2. Master Data Management (MDM)", "text": "Azure Functions query CosmosDB. If user exists, pet array is updated; if not, a Global ID is created.",
+      "x": -50, "y": 100, "scale": 2.5
+    },
+    {
+      "id": 3, "title": "3. Orchestration & Decoupling", "text": "Clean data flows to Azure Service Bus. This guarantees 0% data loss if Salesforce experiences downtime.",
+      "x": -250, "y": 50, "scale": 2.2
+    },
+    {
+      "id": 4, "title": "4. Integration Loop-back", "text": "Sender Function asynchronously injects data into Salesforce, receives Contact ID, and updates CosmosDB.",
+      "x": -450, "y": 0, "scale": 2.5
+    }
+  ]
+}
