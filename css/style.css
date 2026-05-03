@@ -48,14 +48,29 @@ button:hover { background: #0078D4; border-color: #0078D4; transform: scale(1.05
 
 /* 🟡 Pop-up de Explicación (Estilo Libreta/Nota) */
 #info-popup {
-    position: fixed; top: 60px; left: 40px; width: 320px;
-    background: #fdfae3; border: 1px solid #e0dcae;
+    position: fixed; 
+    top: 60px; 
+    left: 40px; 
+    /* Cambiamos width fijo por max-width y min-width */
+    min-width: 320px;
+    max-width: 500px; /* Esto permite que crezca si hay mucho texto */
+    width: auto; 
+    
+    background: #fdfae3; 
+    border: 1px solid #e0dcae;
     border-radius: 2px 15px 15px 2px;
     box-shadow: 5px 15px 25px rgba(0,0,0,0.4), inset 5px 0 0 rgba(200, 50, 50, 0.6);
-    padding: 20px 20px 20px 30px; z-index: 999; 
-    transition: opacity 0.3s, transform 0.3s; 
+    
+    padding: 20px 25px 20px 35px;
+    z-index: 999; 
+    transition: all 0.3s ease; /* Transición suave para cuando crezca */
+    
     background-image: repeating-linear-gradient(transparent, transparent 27px, #a6d8f2 28px);
     background-position: 0 40px;
+    
+    /* Evita que el texto se salga */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 #info-popup.hidden { opacity: 0; pointer-events: none; transform: translateX(-20px) rotate(-3deg); }
 #info-popup h2 { 
@@ -66,8 +81,13 @@ button:hover { background: #0078D4; border-color: #0078D4; transform: scale(1.05
     content: ''; position: absolute; bottom: 0; left: -5%; width: 110%; height: 8px;
     background-color: rgba(255, 235, 59, 0.7); z-index: -1; border-radius: 4px; transform: rotate(-1deg);
 }
-#info-popup p { font-size: 0.95rem; line-height: 28px; color: #444; font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; }
-
+#info-popup p { 
+    font-size: 1.1rem; /* Un poco más grande para las notas largas */
+    line-height: 28px;
+    color: #444; 
+    font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+    white-space: pre-line; /* Esto respeta los saltos de línea \n del JSON */
+}
 /* 🟣 Minimapa */
 #minimap {
     position: fixed; bottom: 90px; right: 25px; width: 180px;
