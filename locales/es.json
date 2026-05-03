@@ -7,8 +7,14 @@
   },
   "steps": [
     {
-      "id": 0, "title": "Arquitectura Global Mars Petcare", "text": "Bienvenido. Esta es la visión end-to-end de nuestra arquitectura 100% Azure-centric, diseñada para la escalabilidad global y la integridad de datos.",
+      "id": 0, "title": "Arquitectura Global Mars Petcare", "text": "Bienvenido. Esta es la visión end to end del flujo de la App/Form, diseñado para la escalabilidad global y la integridad de datos.",
       "x": 0, "y": 0, "scale": 1.0
+    },
+    {
+      "id": 0,
+      "title": "Requisitos del Proyecto",
+      "text": "Puntos clave para el flujo:\n• Arquitectura 100% Cloud Nativa.\n• Integración con Salesforce (Sales & Marketing).\n• Escalabilidad global multi marca.\n• Integridad y seguridad de datos (GDPR/Seguridad).\n• Procesamiento asíncrono para alta disponibilidad.",
+      "x": 0, "y": 0, "scale": 1.2
     },
     {
       "id": 1, "title": "Tipos de Flujos (Sync / Async)", "text": "Se clasifican las interacciones en síncronas (para la experiencia inmediata del usuario en la web) y asíncronas (para el procesamiento pesado y la integración entre Azure y Salesforce).",
