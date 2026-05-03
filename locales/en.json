@@ -11,6 +11,12 @@
       "x": 0, "y": 0, "scale": 1.0
     },
     {
+      "id": 0,
+      "title": "Project Requirements",
+      "text": "Key points requested for the flow:\n• 100% Cloud Native Architecture (Azure).\n• Integration with Salesforce (Sales & Marketing).\n• Global multi brand scalability.\n• Data integrity and security (GDPR/Security).\n• Asynchronous processing for high availability.",
+      "x": 0, "y": 0, "scale": 1.2
+    },
+    {
       "id": 1, "title": "Flow Types (Sync / Async)", "text": "We classify interactions into synchronous (for immediate web user experience) and asynchronous (for heavy lifting and Azure - Salesforce integration).",
       "x": 511, "y": -185, "scale": 5.0
     },
