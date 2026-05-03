@@ -87,6 +87,10 @@
     {
       "id": 18, "title": "Entornos (Environments & CI/CD)", "text": "Se tienen definidos entornos aislados (DEV, STAGING, PROD) para validar el código y probar el flujo completo simulando la carga de producción antes de impactar al usuario final.",
       "x": -6, "y": -296, "scale": 2.9
+    },
+    {
+      "id": 19, "title": "References", "text": "Technical Documentation:\n• Azure: learn.microsoft.com/en-us/azure\n• Salesforce: developer.salesforce.com/docs\n• Security: owasp.org/www-project-api-security",
+      "x": -58, "y": 233, "scale": 1.5
     }
   ]
 }
