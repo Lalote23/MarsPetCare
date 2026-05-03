@@ -90,7 +90,7 @@
     },
     {
       "id": 19, "title": "References", "text": "Technical Documentation:\n• Azure: learn.microsoft.com/en-us/azure\n• Salesforce: developer.salesforce.com/docs\n• Security: owasp.org/www-project-api-security",
-      "x": -58, "y": 233, "scale": 1.5
+      "x": 0, "y": 0, "scale": 1.0
     }
   ]
 }
